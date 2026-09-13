@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YooHoo Chat | W3</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="authOverlay">
+    <div class="card">
+        <h1 id="authTitle">Login</h1>
+        <input type="text" id="userIn" placeholder="Username">
+        <input type="password" id="passIn" placeholder="Password">
+        <button id="mainAuthBtn" class="btn-main">Login</button>
+        <button id="toggleBtn">Need an account? Register</button>
+    </div>
+</div>
+
+<div id="kickOverlay" style="display:none;">
+    <div class="card">
+        <h2 style="color:#ff4d4d;">Access Denied</h2>
+        <p>Your account is currently suspended.</p>
+        <button id="rejoinBtn" class="btn-main" onclick="requestRejoin()">Request Reactivation</button>
+        <p id="requestStatus">Signal sent to staff.</p>
+    </div>
+</div>
+
+<header>
+    <h2 onclick="location.reload()">YOOHOO</h2>
+    <div id="headerInfo"></div>
+    <button onclick="location.reload()" id="logoutBtn">Logout</button>
+</header>
+
+<main>
+    <div id="sidebar">
+        <div id="viewIndicator">
+            <span>ONLINE USERS</span>
+            <button id="backToGlobal" onclick="loadGlobalChat()">BACK TO GLOBAL</button>
+        </div>
+        <div id="userList"></div>
+    </div>
+    <div id="chatArea">
+        <div id="chatContainer"></div>
+        <div id="inputArea">
+            <input type="text" id="messageInput" placeholder="Message..." autocomplete="off">
+            <button class="btn-main" id="sendMsgBtn">Send</button>
+        </div>
+    </div>
+</main>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
