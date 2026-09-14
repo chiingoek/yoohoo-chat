@@ -1,0 +1,351 @@
+:root {
+    --primary: #8c8c8c;
+    --primary-glow: rgba(140, 140, 140, 0.25);
+    --mod: #a6a6a6;
+    --bg: #000000;
+    --surface: #0a0a0a;
+    --text: #e0e0e0;
+    --sidebar-bg: #050505;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    transition: transform 0.2s, background 2s;
+}
+
+#authOverlay, #kickOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(15px);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: var(--surface);
+    padding: 30px;
+    border-radius: 20px;
+    border: 1px solid #222;
+    box-shadow: 0 0 30px rgba(140, 140, 140, 0.1);
+    width: 400px;
+    text-align: center;
+}
+
+h1, h2 {
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--primary);
+    text-shadow: 0 0 10px var(--primary-glow);
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background: #000;
+    color: #fff;
+    transition: 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.btn-main {
+    background: #222;
+    color: white;
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: 1px solid #444;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px var(--primary-glow);
+    transition: 0.2s;
+}
+
+.btn-main:hover {
+    background: #333;
+    border-color: var(--primary);
+}
+
+header {
+    height: 60px;
+    background: #050505;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid #222;
+    transition: opacity 2s;
+}
+
+header h2 {
+    cursor: pointer;
+}
+
+#headerInfo {
+    font-size: 0.8em;
+    opacity: 0.8;
+    color: var(--mod);
+    transition: opacity 1s;
+}
+
+#logoutBtn {
+    background: none;
+    color: #ff4d4d;
+    border: 1px solid #ff4d4d;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+main {
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+#sidebar {
+    width: 300px;
+    background: var(--sidebar-bg);
+    border-right: 1px solid #111;
+    padding: 15px;
+    overflow-y: auto;
+    transition: opacity 1s;
+}
+
+#chatArea {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+#chatContainer {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: opacity 1.5s;
+}
+
+.message {
+    padding: 10px 15px;
+    border-radius: 12px;
+    max-width: 80%;
+    font-size: 0.9em;
+    line-height: 1.4;
+    cursor: pointer;
+    transition: 0.2s;
+    position: relative;
+}
+
+.message:hover {
+    filter: brightness(1.2);
+}
+
+.msg-Member {
+    background: #111;
+    align-self: flex-start;
+    border-left: 3px solid #333;
+}
+
+.msg-Moderator {
+    background: #121212;
+    align-self: flex-start;
+    border-left: 3px solid var(--mod);
+}
+
+.msg-Admin {
+    background: #1a1a1a;
+    align-self: flex-start;
+    border-left: 3px solid var(--primary);
+}
+
+.msg-Bot {
+    background: #0a0a0a;
+    align-self: flex-start;
+    border-left: 3px solid #888;
+    color: #aaa;
+    font-family: monospace;
+}
+
+.msg-me {
+    align-self: flex-end;
+    background: #262626;
+    color: white;
+    border: 1px solid #404040;
+}
+
+.reaction-drawer {
+    display: none;
+    gap: 12px;
+    background: #000;
+    padding: 8px 15px;
+    border-radius: 30px;
+    border: 1px solid var(--primary);
+    position: absolute;
+    top: -45px;
+    left: 0;
+    z-index: 9999;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.8);
+}
+
+.msg-me .reaction-drawer {
+    left: auto;
+    right: 0;
+}
+
+.message.active-react .reaction-drawer {
+    display: flex;
+}
+
+.reaction {
+    cursor: pointer;
+    font-size: 1.2em;
+    transition: 0.2s;
+    filter: grayscale(0.2);
+}
+
+.reaction:hover {
+    transform: scale(1.4);
+    filter: grayscale(0);
+}
+
+.reaction-count-tag {
+    font-size: 0.75em;
+    background: rgba(255,255,255,0.08);
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-right: 5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 5px;
+    border: 1px solid rgba(255,255,255,0.05);
+}
+
+.user-row {
+    background: #0a0a0a;
+    padding: 12px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #1a1a1a;
+    cursor: pointer;
+    transition: 0.3s;
+    position: relative;
+}
+
+.user-row:hover {
+    border-color: var(--primary);
+    background: #111;
+}
+
+.mod-btn {
+    font-size: 0.6em;
+    padding: 4px 8px;
+    margin-right: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    font-weight: bold;
+    color: white;
+}
+
+.notif-glow {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 15px var(--primary-glow);
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; border-width: 1px; }
+    50% { opacity: 0.7; border-width: 2px; }
+    100% { opacity: 1; border-width: 1px; }
+}
+
+#viewIndicator {
+    font-size: 0.7em;
+    color: var(--primary);
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#backToGlobal {
+    display: none;
+    background: var(--primary);
+    border: none;
+    color: white;
+    font-size: 10px;
+    padding: 2px 5px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+#inputArea {
+    padding: 20px;
+    background: #050505;
+    display: flex;
+    gap: 10px;
+    border-top: 1px solid #111;
+    transition: opacity 1.5s;
+}
+
+#messageInput {
+    margin: 0;
+}
+
+#sendMsgBtn {
+    width: 100px;
+    margin: 0;
+}
+
+#toggleBtn {
+    background: none;
+    border: none;
+    color: var(--primary);
+    cursor: pointer;
+    margin-top: 10px;
+    font-size: 0.8em;
+    text-decoration: underline;
+}
+
+#requestStatus {
+    font-size: 0.8em;
+    color: gray;
+    margin-top: 10px;
+}
+
+/* Glitch Animation for the Void Anomaly */
+.glitch-flicker {
+    animation: glitch 0.15s infinite;
+}
+
+@keyframes glitch {
+    0% { opacity: 1; transform: translate(0); }
+    20% { opacity: 0.8; transform: translate(-2px, 1px); }
+    40% { opacity: 0.4; transform: translate(2px, -1px); }
+    60% { opacity: 0.9; transform: translate(-1px, 2px); }
+    80% { opacity: 0.3; transform: translate(1px, -2px); }
+    100% { opacity: 1; transform: translate(0); }
+}
